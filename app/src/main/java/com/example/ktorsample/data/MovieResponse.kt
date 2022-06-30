@@ -1,6 +1,9 @@
 package com.example.ktorsample.data
 
-data class Movie(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class MovieResponse(
     val adult: Boolean,
     val backdrop_path: String,
     val belongs_to_collection: Any,
