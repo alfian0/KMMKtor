@@ -1,12 +1,13 @@
-package com.example.ktorsample.data
+package com.example.shared.data
 
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class MovieResponse(
     val adult: Boolean,
     val backdrop_path: String,
-    val belongs_to_collection: Any,
+    val belongs_to_collection: String? = "",
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,
@@ -38,7 +39,7 @@ data class MovieResponse(
     @Serializable
     data class ProductionCompany(
         val id: Int,
-        val logo_path: String,
+        val logo_path: String? = "",
         val name: String,
         val origin_country: String
     )
