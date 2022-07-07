@@ -1,21 +1,18 @@
-package com.example.ktorsample.net
+package com.example.shared.net
 
+import com.example.shared.initLogger
+import io.github.aakira.napier.Napier
 import io.ktor.client.*
-import io.ktor.client.engine.android.*
-import io.ktor.client.plugins.*
-import io.ktor.client.request.*
 import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.kotlinx.serializer.*
-import io.ktor.serialization.kotlinx.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
 
 object KtorClient {
 //    private const val AUTHORIZATION_HEADER = "Authorization"
 //    private var API_KEY: String = "Your API Key here"
 
-    private val client = HttpClient(Android) {
+    private val client = HttpClient() {
 //        defaultRequest {
 //            header(AUTHORIZATION_HEADER, "BEARER $API_KEY")
 //        }
@@ -28,7 +25,15 @@ object KtorClient {
                 //explicitNulls = false
             })
         }
-    }
+        install(Logging) {
+            level = LogLevel.HEADERS
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Napier.v(tag = "HTTP Client", message = message)
+                }
+            }
+        }
+    }.also { initLogger() }
 
     val getInstance = client
 }

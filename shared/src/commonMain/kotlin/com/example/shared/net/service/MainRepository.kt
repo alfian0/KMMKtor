@@ -1,25 +1,19 @@
-package com.example.ktorsample.net.service
+package com.example.shared.net.service
 
-import android.util.Log
-import com.example.ktorsample.data.MovieResponse
+import com.example.shared.data.MovieResponse
 import io.ktor.client.plugins.*
-import timber.log.Timber
-import java.io.IOException
+import io.ktor.utils.io.errors.*
 
 object MainRepository {
-
+    @Throws(Exception::class)
     suspend fun search():
             List<MovieResponse.ProductionCompany> {
         return try {
-            //val response = YelpAppServicesImpl.search(term = term ?: "")
             val response = AppServicesImpl.search()
-            Log.e("data",response.toString())
             response.production_companies
         } catch (e: ClientRequestException) {
-            Timber.d("client exception" )
             emptyList()
         } catch (e: IOException) {
-            Timber.d("no internet" )
             emptyList()
         }
     }
